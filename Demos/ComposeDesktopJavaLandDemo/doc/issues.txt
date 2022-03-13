@@ -1,0 +1,5 @@
+Color: HSB/HSV and HSL
+HSB/HSV are identical
+HSL is slightly different
+Often different APIs for the same thing.
+https://wisotop.de/hsv-und-hsl-farbmodell.php

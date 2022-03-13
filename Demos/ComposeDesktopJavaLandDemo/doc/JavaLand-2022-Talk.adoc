@@ -1,0 +1,121 @@
+= Jetpack/Jetbrains Compose - the new UI kid on the block
+
+A comparison of JavaFX vs. Compose
+
+== Introduction
+
+=== Basic facts
+
+|===
+|                       | JavaFX                                        | Compose
+
+| Introduction          | Version 1.0, December 2008                    | Version 1.0 (for Android), July 2021
+|                       | Version 2.0, Q3 2011                          | Version 1.0 (Multiplatform), December 2021
+| Main design concept   | Controls (objets), properties, bindings       | Composables (functions)
+| Languages             | Any JVM language                              | Kotlin only (because of mandatory Kotlin compiler plugin)
+| Build tool            | Any build tool (Maven, Gradle, ...)           | Gradle only (because of Gradle plugin)
+| IDE support           | Any IDE (Eclipse, IntelliJ, ...)              | Practically only IntelliJ/Android-Studio
+| Maintainers           | Oracle, Gluon, Community contributions        | Google, Jetbrains, Community contributions
+| Big users             | ...                                           | Google (Android ...), Jetbrains (Toolbox ...), Twitter, ...
+| Cross-Platform techn. | JVM, GraalVM/Native-image                     | JVM, KMP bzw. KMM
+| Platforms             | Windows                                       | Windows
+|                       | macOS                                         | macOS
+|                       | Linux                                         | Linux
+|                       | Android (Gluon)                               | Android (native)
+|                       | iOS (Gluon)                                   | iOS (only KMM + SwiftUI, +rumors about direct Skiko Canvas rendering in the future)
+|                       | embedded (Gluon)                              | embedded (Raspberry Pi)
+|                       | Web (JPro on Server, Gluon on Client ???)     | Web (DOM based on Client, +Canvas rendering in 1.2 dev builds already)
+| License               | GPL+Classpath for JavaFX                      | Apache License 2.0
+|                       | GPL for Attach                                |
+|                       | Proprietary for Charm-Glisten                 |
+|                       | Various others for Gluon tooling              |
+| Sources               | GitHub + proprietary Gluon SW (charm-glisten) | GitHub
+|                       | Proprietary Gluon SW (charm-glisten)          |
+|===
+
+== Key topics
+
+* Single-platform or multi-platform (KMM)
+  ** Integrating Java code
+     *** Direct use on single-platform vs expect/actual in multi-platform
+     *** JVM vs Android
+     *** JVM/Android vs iOS
+
+
+
+== Staying platform independent
+
+=== Logging
+
+`private val log = KotlinLogging.logger {}`
+
+=== Model
+
+`Coroutines` + `StateFlow` (Example model)   // No (Android) ViewModel, LiveData
+See also SharedFlow, Immutable Collections
+
+https://developer.android.com/kotlin/flow
+https://medium.com/androiddevelopers/migrating-from-livedata-to-kotlins-flow-379292f419fb
+
+SQLite with SQLDelight      // No (Android) Rooms
+
+=== Navigation
+
+`Decompose` or `Voyager`
+
+=== Packaging
+
+* Plugin
+  ** jpackage
+  ** sign native libraries in jars
+
+=== Incompatibilities between Android and Desktop
+
+``
+    // For GPX import:
+    //  implementation('com.sun.xml.bind:jaxb-impl:3.0.1') // Does not work on Android
+    implementation("io.jenetics:jpx:2.2.0") // https://github.com/jenetics/jpx
+    implementation("com.fasterxml:aalto-xml:1.3.0") // https://github.com/FasterXML/aalto-xml
+``
+
+=== Graphics
+
+* Problems with old device on Android +
+  W/OpenGLRenderer: Shape too large to be rendered into a texture (22835x28834, max=16384x16384) (tested with API level 27) +
+  Later crash without trace
+
+== Solutions
+
+|===
+|                     | JavaFX                                                      | Compose
+
+| AWT                 | built-in (only desktop)                                     | built-in (only desktop)
+| View SVG            | Conversion to FXML, +
+                        variants of Apache Batik (only desktop), +
+                        https://github.com/hervegirod/fxsvgimage                    | built-in
+| View PDF            | Variants of Apache PDFBox (Dirk, myself) (only desktop)     | Variants of Apache PDFBox (only desktop), +
+                                                                                      PDFRenderer on Android
+| WebView             | built-in (but limited)                                      | https://github.com/JetBrains/compose-jb/issues/668
+                                                                                      https://stackoverflow.com/a/70779389/4262407
+|===
+
+
+== Links
+
+Announcements:
+
+https://blog.jetbrains.com/kotlin/2021/08/compose-multiplatform-goes-alpha/
+https://blog.jetbrains.com/kotlin/2021/12/compose-multiplatform-1-0-is-going-live/
+
+
+https://www.jetbrains.com/lp/compose-desktop/
+
+https://developer.android.com/jetpack/compose/documentation
+
+https://github.com/JetBrains/compose-jb
+
+https://jeroenmols.com/blog/2021/03/17/share-code-kotlin-multiplatform/
+
+
+https://arkivanov.github.io/Decompose/
+https://github.com/adrielcafe/voyager
