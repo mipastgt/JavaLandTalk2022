@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform") version "1.6.10"
+    kotlin("multiplatform") version "1.6.21"
     id("com.android.application")
     id("kotlin-android-extensions")
     id("maven-publish")
@@ -28,7 +28,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
             }
         }
         val commonTest by getting {
@@ -44,13 +44,13 @@ kotlin {
         val jvmTest by getting
         val androidMain by getting {
             dependencies {
-                implementation("com.google.android.material:material:1.5.0")
+                implementation("com.google.android.material:material:1.6.0")
                 implementation("net.sf.geographiclib:GeographicLib-Java:1.52")
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation("junit:junit:4.13.1")
+                implementation("junit:junit:4.13.2")
             }
         }
     }
