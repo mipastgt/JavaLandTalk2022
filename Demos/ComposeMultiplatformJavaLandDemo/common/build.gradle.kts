@@ -2,7 +2,7 @@ import org.jetbrains.compose.compose
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev686"
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev724"
     id("com.android.library")
 }
 
@@ -33,8 +33,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.appcompat:appcompat:1.4.1")
-                api("androidx.core:core-ktx:1.7.0")
+                api("androidx.appcompat:appcompat:1.4.2")
+                api("androidx.core:core-ktx:1.8.0")
             }
         }
         val androidTest by getting {
@@ -62,4 +62,5 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    namespace = "de.mpmediasoft.polyspiral.common"
 }

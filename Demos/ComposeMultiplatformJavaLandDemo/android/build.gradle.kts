@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev686"
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev724"
     id("com.android.application")
     kotlin("android")
 }
@@ -34,4 +34,5 @@ android {
             isMinifyEnabled = false
         }
     }
+    namespace = "de.mpmediasoft.polyspiral.android"
 }
