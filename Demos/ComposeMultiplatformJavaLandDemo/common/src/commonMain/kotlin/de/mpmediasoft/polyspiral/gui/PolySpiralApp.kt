@@ -16,31 +16,41 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.mpmediasoft.polyspiral.model.PolySpiralManager
 import de.mpmediasoft.polyspiral.model.drawSpiral
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PolySpiralApp() {
+fun PolySpiralApp(topOffset: Dp = 0.dp) {
     val coroutineScope = rememberCoroutineScope()
     val polySpiralManager = remember { PolySpiralManager(coroutineScope) }
     val polySpiralManagerState by polySpiralManager.polySpiralManagerState.collectAsState()
     val uiScale = LocalDensity.current.density
 
+    val backgroundColor = Color(210, 230, 255)
+
     Surface {
         Column(modifier = Modifier.fillMaxSize()) {
+            if (topOffset != 0.dp) {
+                // To skip upper part of screen for iOS.
+                Box(modifier = Modifier
+                    .height(topOffset)
+                    .background(backgroundColor)
+                    .fillMaxWidth())
+            }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier
-                    .background(Color(210, 230, 255))
+                    .background(backgroundColor)
                     .padding(start = 10.dp, top = 5.dp, end = 10.dp, bottom = 5.dp)
                     .fillMaxWidth()
             ) {
                 Button(
                     onClick = { if (polySpiralManagerState.isRendering) polySpiralManager.stopRendering() else polySpiralManager.startRendering() },
-                    modifier = Modifier.width(70.dp)
+//                    modifier = Modifier.width(90.dp)
                 ) {
                     Text(text = if (polySpiralManagerState.isRendering) "Stop" else "Start")
                 }
@@ -48,12 +58,13 @@ fun PolySpiralApp() {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .size(70.dp, 36.dp)
+                        .size(65.dp, 36.dp)
                         .clip(RoundedCornerShape(4.dp))
                         .background(Color.White)
                 ) {
                     Text(
-                        text = "%.2fº".format(polySpiralManagerState.angleIncrementDeg)
+//                      text = "%.2fº".format(polySpiralManagerState.angleIncrementDeg)
+                        text = "${polySpiralManagerState.angleIncrementDeg.toInt()}º"
                     )
                 }
 
@@ -66,7 +77,7 @@ fun PolySpiralApp() {
 
                 Button(
                     onClick = { polySpiralManager.reset() },
-                    modifier = Modifier
+//                    modifier = Modifier.width(90.dp)
                 ) {
                     Text(text = "Reset")
                 }
