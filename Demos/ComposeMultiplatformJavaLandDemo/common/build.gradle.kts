@@ -2,7 +2,7 @@ import org.jetbrains.compose.compose
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev724"
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev725"
     id("com.android.library")
 }
 
@@ -22,8 +22,9 @@ kotlin {
                 api(compose.runtime)
                 api(compose.foundation)
                 api(compose.material)
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
                 implementation("de.mpmediasoft.polyspiral:MultiplatformJavaLandDemoModel:1.0.0-SNAPSHOT")
+                implementation("io.github.microutils:kotlin-logging:2.1.23")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
             }
         }
         val commonTest by getting {

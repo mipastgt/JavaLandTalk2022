@@ -20,6 +20,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.mpmediasoft.polyspiral.model.PolySpiralManager
 import de.mpmediasoft.polyspiral.model.drawSpiral
+import mu.KotlinLogging
+
+private val logger = KotlinLogging.logger {}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -49,7 +52,15 @@ fun PolySpiralApp(topOffset: Dp = 0.dp) {
                     .fillMaxWidth()
             ) {
                 Button(
-                    onClick = { if (polySpiralManagerState.isRendering) polySpiralManager.stopRendering() else polySpiralManager.startRendering() },
+                    onClick = {
+                        if (polySpiralManagerState.isRendering) {
+                            polySpiralManager.stopRendering()
+                            logger.info { "Stopped rendering." }
+                        } else {
+                            polySpiralManager.startRendering()
+                            logger.info { "Started rendering." }
+                        }
+                    },
 //                    modifier = Modifier.width(90.dp)
                 ) {
                     Text(text = if (polySpiralManagerState.isRendering) "Stop" else "Start")
