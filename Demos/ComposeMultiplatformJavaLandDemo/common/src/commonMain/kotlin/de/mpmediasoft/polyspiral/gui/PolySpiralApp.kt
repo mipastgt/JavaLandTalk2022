@@ -51,19 +51,21 @@ fun PolySpiralApp(topOffset: Dp = 0.dp) {
                     .padding(start = 10.dp, top = 5.dp, end = 10.dp, bottom = 5.dp)
                     .fillMaxWidth()
             ) {
-                Button(
-                    onClick = {
-                        if (polySpiralManagerState.isRendering) {
-                            polySpiralManager.stopRendering()
-                            logger.info { "Stopped rendering." }
-                        } else {
-                            polySpiralManager.startRendering()
-                            logger.info { "Started rendering." }
-                        }
-                    },
-//                    modifier = Modifier.width(90.dp)
-                ) {
-                    Text(text = if (polySpiralManagerState.isRendering) "Stop" else "Start")
+                DataTooltipArea("Start the graphics animation.") {
+                    Button(
+                        onClick = {
+                            if (polySpiralManagerState.isRendering) {
+                                polySpiralManager.stopRendering()
+                                logger.info { "Stopped rendering." }
+                            } else {
+                                polySpiralManager.startRendering()
+                                logger.info { "Started rendering." }
+                            }
+                        },
+    //                    modifier = Modifier.width(90.dp)
+                    ) {
+                        Text(text = if (polySpiralManagerState.isRendering) "Stop" else "Start")
+                    }
                 }
 
                 Box(
@@ -73,24 +75,30 @@ fun PolySpiralApp(topOffset: Dp = 0.dp) {
                         .clip(RoundedCornerShape(4.dp))
                         .background(Color.White)
                 ) {
-                    Text(
-//                      text = "%.2fº".format(polySpiralManagerState.angleIncrementDeg)
-                        text = "${polySpiralManagerState.angleIncrementDeg.toInt()}º"
+                    DataTooltipArea("Show the current value of the angle in degrees.") {
+                        Text(
+//                              text = "%.2fº".format(polySpiralManagerState.angleIncrementDeg)
+                            text = "${polySpiralManagerState.angleIncrementDeg.toInt()}º"
+                        )
+                    }
+                }
+
+                DataTooltipArea("Adjust the angle manually.", modifier = Modifier.weight(1f)) {
+                    Slider(
+                        value = polySpiralManagerState.angleIncrementDeg.toFloat(),
+                        valueRange = 0f..360f,
+                        onValueChange = { polySpiralManager.angleIncrementDeg = it.toDouble() },
+                        modifier = Modifier.weight(1f)
                     )
                 }
 
-                Slider(
-                    value = polySpiralManagerState.angleIncrementDeg.toFloat(),
-                    valueRange = 0f..360f,
-                    onValueChange = { polySpiralManager.angleIncrementDeg = it.toDouble() },
-                    modifier = Modifier.weight(1f)
-                )
-
-                Button(
-                    onClick = { polySpiralManager.reset() },
+                DataTooltipArea("Stop the graphics animation.") {
+                    Button(
+                        onClick = { polySpiralManager.reset() },
 //                    modifier = Modifier.width(90.dp)
-                ) {
-                    Text(text = "Reset")
+                    ) {
+                        Text(text = "Reset")
+                    }
                 }
             }
 
