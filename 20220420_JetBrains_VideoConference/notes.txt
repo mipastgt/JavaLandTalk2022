@@ -1,4 +1,0 @@
-Ilya Kalibrov
-ilya.kalibrov@jetbrains.com
-Product manager Kotlin/JS and Kotlin Multiplatform
-
